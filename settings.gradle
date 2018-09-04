@@ -1,0 +1,1 @@
+include ':app', ':vuandroidadsdk', ':vuandroidadsdk', ':washcar', ':environmentmonitor'
