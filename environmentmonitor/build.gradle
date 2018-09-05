@@ -35,7 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
-    implementation project(':vuandroidadsdk')
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
@@ -60,6 +59,6 @@ dependencies {
     //注解
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-
     implementation 'com.github.open-android:FragmentTabhostUtils:0.5.0'
+    implementation 'com.github.fyrlove:mysdk:v1.1'
 }
