@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ydky.R;
+import com.ydky.adapter.CourseAdapter;
+import com.ydky.module.recommand.BaseRecommandModel;
 import com.ydky.network.http.RequestCenter;
 import com.ydky.view.fragment.BaseFragment;
 import com.ydky.vuandroidadsdk.okhttp.listener.DisposeDataListener;
@@ -32,10 +34,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
     private TextView mCategoryView;
     private TextView mSearchView;
     private ImageView mLoadingView;
+
+    private CourseAdapter mAdapter;
     /**
      * data
      */
-
+    private BaseRecommandModel mRecommandData;
     public HomeFragment() {
     }
 
@@ -76,6 +80,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
             public void onSuccess(Object responseObj) {
                 //完成真正的功能逻辑
                 Log.i("request", "onSuccess: "+responseObj.toString());
+                mRecommandData = (BaseRecommandModel) responseObj;
+                showSuccessView();
             }
 
             @Override
@@ -84,6 +90,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
                 Log.i("request", "onFailure: "+reasonObj.toString());
             }
         });
+    }
+
+    /**
+     * 请求成功执行的方法
+     */
+    private void showSuccessView() {
+        //判断数据是否为空
+        if(mRecommandData.data.list!=null && mRecommandData.data.list.size()>0){
+            mLoadingView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+            mAdapter = new CourseAdapter(mContext,mRecommandData.data.list);
+            mListView.setAdapter(mAdapter);
+        }else{
+            showErrorView();
+        }
+    }
+
+    /**
+     * 请求失败后执行的方法
+     */
+    private void showErrorView() {
     }
 
     @Override
