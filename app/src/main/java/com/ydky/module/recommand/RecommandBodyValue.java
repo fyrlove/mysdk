@@ -2,6 +2,8 @@ package com.ydky.module.recommand;
 
 
 import com.ydky.module.BaseModel;
+import com.ydky.vuandroidadsdk.module.monitor.Monitor;
+import com.ydky.vuandroidadsdk.module.monitor.emevent.EMEvent;
 
 import java.util.ArrayList;
 
@@ -32,11 +34,11 @@ public class RecommandBodyValue extends BaseModel {
     public String resource;
     public String resourceID;
     public String adid;
-//    public ArrayList<Monitor> startMonitor;
-//    public ArrayList<Monitor> middleMonitor;
-//    public ArrayList<Monitor> endMonitor;
-//    public String clickUrl;
-//    public ArrayList<Monitor> clickMonitor;
-//    public EMEvent event;
+    public ArrayList<Monitor> startMonitor;
+    public ArrayList<Monitor> middleMonitor;
+    public ArrayList<Monitor> endMonitor;
+    public String clickUrl;
+    public ArrayList<Monitor> clickMonitor;
+    public EMEvent event;
 
 }

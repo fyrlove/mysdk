@@ -17,6 +17,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.ydky.vuandroidadsdk.constant.SDKConstant;
+import com.ydky.vuandroidadsdk.module.AdValue;
+
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
@@ -40,8 +43,9 @@ public class Utils {
             DisplayMetrics displayMetrics = pView.getContext().getResources().getDisplayMetrics();
             int displayWidth = displayMetrics.widthPixels;
             Rect rect = new Rect();
+            //获取当前view在屏幕中出现的矩形
             pView.getGlobalVisibleRect(rect);
-            if ((rect.top > 0) && (rect.left < displayWidth)) {
+            if ((rect.top > 0) && (rect.left < displayWidth)) {   //在屏幕中可见位置
                 double areaVisible = rect.width() * rect.height();
                 double areaTotal = pView.getWidth() * pView.getHeight();
                 return (int) ((areaVisible / areaTotal) * 100);
@@ -49,44 +53,45 @@ public class Utils {
                 return -1;
             }
         }
+        //return -1表示当前的view还没有出现在屏幕上
         return -1;
     }
 
     //is wifi connected
-//    public static boolean isWifiConnected(Context context) {
-//        if (context.checkCallingOrSelfPermission(permission.ACCESS_WIFI_STATE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            return false;
-//        }
-//        ConnectivityManager connectivityManager = (ConnectivityManager)
-//                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-//        if (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI) {
-//            return true;
-//        }
-//        return false;
-//    }
+    public static boolean isWifiConnected(Context context) {
+        if (context.checkCallingOrSelfPermission(permission.ACCESS_WIFI_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
+        }
+        return false;
+    }
 
-//    //decide can autoplay the ad
-//    public static boolean canAutoPlay(Context context, AutoPlaySetting setting) {
-//        boolean result = true;
-//        switch (setting) {
-//            case AUTO_PLAY_3G_4G_WIFI:
-//                result = true;
-//                break;
-//            case AUTO_PLAY_ONLY_WIFI:
-//                if (isWifiConnected(context)) {
-//                    result = true;
-//                } else {
-//                    result = false;
-//                }
-//                break;
-//            case AUTO_PLAY_NEVER:
-//                result = false;
-//                break;
-//        }
-//        return result;
-//    }
+    //decide can autoplay the ad
+    public static boolean canAutoPlay(Context context, SDKConstant.AutoPlaySetting setting) {
+        boolean result = true;
+        switch (setting) {
+            case AUTO_PLAY_3G_4G_WIFI:
+                result = true;
+                break;
+            case AUTO_PLAY_ONLY_WIFI:
+                if (isWifiConnected(context)) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+                break;
+            case AUTO_PLAY_NEVER:
+                result = false;
+                break;
+        }
+        return result;
+    }
 
     /**
      * 获取对应应用的版本号
@@ -112,16 +117,16 @@ public class Utils {
      * @param
      * @return
      */
-//    public static String getAdIE(ArrayList<AdValue> values) {
-//        StringBuilder result = new StringBuilder();
-//        if (values != null && values.size() > 0) {
-//            for (AdValue value : values) {
-//                result.append(value.adid.equals("") ? "" : value.adid).append(",");
-//            }
-//            return result.substring(0, result.length() - 1);
-//        }
-//        return "";
-//    }
+    public static String getAdIE(ArrayList<AdValue> values) {
+        StringBuilder result = new StringBuilder();
+        if (values != null && values.size() > 0) {
+            for (AdValue value : values) {
+                result.append(value.adid.equals("") ? "" : value.adid).append(",");
+            }
+            return result.substring(0, result.length() - 1);
+        }
+        return "";
+    }
 
     public static DisplayMetrics getDisplayMetrics(Context context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();

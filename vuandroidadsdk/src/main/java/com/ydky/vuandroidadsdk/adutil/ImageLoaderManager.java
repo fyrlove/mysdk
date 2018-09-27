@@ -10,7 +10,9 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.ydky.vuandroidadsdk.R;
@@ -88,11 +90,34 @@ public class ImageLoaderManager {
         }
     }
 
+    public void displayImage(ImageView imageView, String url,
+                             ImageLoadingListener listener,DisplayImageOptions options){
+        if(mImageLoader!=null){
+            mImageLoader.displayImage(url,imageView,options,listener);
+        }
+    }
+
     public void displayImage(ImageView imageView,String url,ImageLoadingListener listener){
         displayImage(imageView,url,null,listener);
     }
 
     public void displayImage(ImageView imageView,String url){
         displayImage(imageView,url,null);
+    }
+
+    public DisplayImageOptions getOptionsWithNoCache() {
+
+        DisplayImageOptions options = new
+                DisplayImageOptions.Builder()
+                //.cacheInMemory(true)//设置下载的图片是否缓存在内存中, 重要，否则图片不会缓存到内存中
+                //.cacheOnDisk(true)//设置下载的图片是否缓存在SD卡中, 重要，否则图片不会缓存到硬盘中
+                .considerExifParams(true)  //是否考虑JPEG图像EXIF参数（旋转，翻转）
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)//设置图片以如何的编码方式显示
+                .bitmapConfig(Bitmap.Config.RGB_565)//设置图片的解码类型//
+                .decodingOptions(new BitmapFactory.Options())//设置图片的解码配置
+                .resetViewBeforeLoading(true)//设置图片在下载前是否重置，复位
+                .displayer(new FadeInBitmapDisplayer(400))
+                .build();
+        return options;
     }
 }
